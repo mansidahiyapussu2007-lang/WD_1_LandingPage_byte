@@ -1,0 +1,775 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="NOVA helps you work smarter, stay organized, and achieve more with one simple productivity platform.">
+    <title>NOVA — Work Smarter</title>
+
+    <style>
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #635bff;
+            --primary-dark: #4c45d9;
+            --dark: #15152b;
+            --text: #5d6075;
+            --light: #f6f7ff;
+            --white: #ffffff;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            color: var(--dark);
+            background: var(--white);
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        button, a {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .container {
+            width: min(1120px, 90%);
+            margin: 0 auto;
+        }
+
+        /* Navigation */
+        header {
+            background: var(--white);
+            border-bottom: 1px solid #eeeeF5;
+        }
+
+        nav {
+            min-height: 76px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            color: var(--primary);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text);
+            font-size: 0.95rem;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 13px 24px;
+            border-radius: 9px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            border: 2px solid transparent;
+            transition: transform 0.2s, background 0.2s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+        }
+
+        .btn-outline {
+            border-color: #e2e2f0;
+            background: var(--white);
+            color: var(--dark);
+        }
+
+        /* Hero section */
+        .hero {
+            background:
+                radial-gradient(ellipse at 80% 30%, #e8e5ff 0%, transparent 42%),
+                linear-gradient(135deg, #ffffff, #f8f7ff);
+            padding: 95px 0 100px;
+            overflow: hidden;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1.05fr 0.95fr;
+            align-items: center;
+            gap: 65px;
+        }
+
+        .eyebrow {
+            display: inline-block;
+            padding: 7px 13px;
+            border-radius: 30px;
+            background: #eeecff;
+            color: var(--primary);
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin-bottom: 22px;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.7rem, 5vw, 4.5rem);
+            line-height: 1.1;
+            letter-spacing: -2.5px;
+            margin-bottom: 24px;
+        }
+
+        .hero h1 span {
+            color: var(--primary);
+        }
+
+        .hero p {
+            color: var(--text);
+            font-size: 1.08rem;
+            max-width: 490px;
+            margin-bottom: 30px;
+        }
+
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+            margin-bottom: 25px;
+        }
+
+        .hero-note {
+            color: #77798c;
+            font-size: 0.88rem;
+        }
+
+        /* Product preview */
+        .preview-wrap {
+            position: relative;
+        }
+
+        .product-card {
+            background: var(--white);
+            padding: 24px;
+            border-radius: 20px;
+            box-shadow: 0 25px 70px rgba(42, 34, 110, 0.13);
+            border: 1px solid #efeff8;
+            transform: rotate(1deg);
+        }
+
+        .preview-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            padding-bottom: 22px;
+            border-bottom: 1px solid #eeeeF5;
+        }
+
+        .preview-header h3 {
+            font-size: 1.1rem;
+        }
+
+        .status {
+            background: #e6f9ed;
+            color: #168548;
+            font-size: 0.75rem;
+            padding: 5px 10px;
+            border-radius: 20px;
+        }
+
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin: 23px 0 10px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .progress-track {
+            width: 100%;
+            height: 10px;
+            background: #eeedf8;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            width: 75%;
+            height: 100%;
+            background: linear-gradient(90deg, #635bff, #9d77ff);
+            border-radius: 20px;
+        }
+
+        .task {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 0;
+            border-bottom: 1px solid #f0f0f6;
+        }
+
+        .task:last-child {
+            border-bottom: none;
+        }
+
+        .check {
+            display: grid;
+            place-items: center;
+            flex-shrink: 0;
+            width: 27px;
+            height: 27px;
+            border-radius: 8px;
+            background: #eeecff;
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        .task strong {
+            display: block;
+            font-size: 0.9rem;
+        }
+
+        .task small {
+            color: #898a9a;
+        }
+
+        .floating-note {
+            position: absolute;
+            bottom: -22px;
+            left: -25px;
+            background: var(--white);
+            padding: 15px 20px;
+            border-radius: 13px;
+            box-shadow: 0 12px 35px rgba(42, 34, 110, 0.12);
+            font-size: 0.9rem;
+            font-weight: 700;
+        }
+
+        .floating-note span {
+            display: block;
+            font-size: 0.78rem;
+            color: #168548;
+            font-weight: 400;
+        }
+
+        /* Features */
+        .features {
+            padding: 95px 0;
+        }
+
+        .section-heading {
+            text-align: center;
+            max-width: 620px;
+            margin: 0 auto 50px;
+        }
+
+        .section-heading h2 {
+            font-size: clamp(2rem, 4vw, 2.8rem);
+            letter-spacing: -1px;
+            line-height: 1.2;
+            margin-bottom: 15px;
+        }
+
+        .section-heading p {
+            color: var(--text);
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 25px;
+        }
+
+        .feature-card {
+            padding: 30px 25px;
+            border: 1px solid #ececf5;
+            border-radius: 16px;
+            background: var(--white);
+            transition: transform 0.25s, box-shadow 0.25s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 18px 40px rgba(40, 35, 100, 0.08);
+        }
+
+        .feature-icon {
+            display: grid;
+            place-items: center;
+            width: 54px;
+            height: 54px;
+            border-radius: 14px;
+            background: #eeecff;
+            font-size: 1.6rem;
+            margin-bottom: 22px;
+        }
+
+        .feature-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 12px;
+        }
+
+        .feature-card p {
+            color: var(--text);
+            font-size: 0.95rem;
+        }
+
+        /* Call to action */
+        .cta-section {
+            padding: 25px 0 90px;
+        }
+
+        .cta-box {
+            text-align: center;
+            padding: 65px 25px;
+            background: linear-gradient(135deg, #635bff, #8570ff);
+            color: var(--white);
+            border-radius: 24px;
+        }
+
+        .cta-box h2 {
+            font-size: clamp(2rem, 4vw, 2.8rem);
+            line-height: 1.2;
+            margin-bottom: 18px;
+        }
+
+        .cta-box p {
+            max-width: 550px;
+            margin: 0 auto 28px;
+            color: #eeedff;
+        }
+
+        .cta-box .btn {
+            background: var(--white);
+            color: var(--primary);
+        }
+
+        .cta-box .btn:hover {
+            background: #f0efff;
+        }
+
+        /* Footer */
+        footer {
+            padding: 28px 0;
+            border-top: 1px solid #eeeeF5;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        footer p,
+        footer a {
+            color: var(--text);
+            font-size: 0.88rem;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 22px;
+        }
+
+        /* Tablet and mobile responsiveness */
+        @media (max-width: 850px) {
+            .hero {
+                padding: 70px 0 85px;
+            }
+
+            .hero-grid {
+                grid-template-columns: 1fr;
+                gap: 55px;
+            }
+
+            .hero-content {
+                text-align: center;
+            }
+
+            .hero p {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .hero-actions {
+                justify-content: center;
+            }
+
+            .preview-wrap {
+                width: min(100%, 530px);
+                margin: 0 auto;
+            }
+
+            .feature-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .nav-links {
+                gap: 17px;
+            }
+        }
+
+        @media (max-width: 560px) {
+            .container {
+                width: 91%;
+            }
+
+            nav {
+                min-height: 70px;
+                flex-wrap: wrap;
+                padding: 12px 0;
+                gap: 10px;
+            }
+
+            .logo {
+                font-size: 1.55rem;
+            }
+
+            .nav-links {
+                width: 100%;
+                justify-content: center;
+                gap: 20px;
+                order: 3;
+                padding: 7px 0;
+            }
+
+            .nav-links a {
+                font-size: 0.85rem;
+            }
+
+            nav > .btn {
+                padding: 9px 13px;
+                font-size: 0.82rem;
+            }
+
+            .hero {
+                padding: 60px 0 75px;
+            }
+
+            .hero h1 {
+                font-size: 2.7rem;
+                letter-spacing: -1.5px;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .btn {
+                padding: 12px 17px;
+            }
+
+            .product-card {
+                padding: 18px;
+                transform: none;
+            }
+
+            .floating-note {
+                left: 8px;
+                bottom: -30px;
+            }
+
+            .features {
+                padding: 75px 0;
+            }
+
+            .feature-grid {
+                grid-template-columns: 1fr;
+                gap: 17px;
+            }
+
+            .feature-card {
+                padding: 25px;
+            }
+
+            .cta-section {
+                padding-bottom: 65px;
+            }
+
+            .cta-box {
+                padding: 48px 20px;
+                border-radius: 18px;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .footer-links {
+                justify-content: center;
+            }
+        }
+
+        /* Accessibility */
+        a:focus-visible {
+            outline: 3px solid #a49eff;
+            outline-offset: 4px;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
+
+            *, *::before, *::after {
+                transition: none !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <header>
+        <nav class="container" aria-label="Main navigation">
+            <a href="#home" class="logo">NOVA.</a>
+
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#about">About</a></li>
+            </ul>
+
+            <a href="#get-started" class="btn btn-primary">Get Started</a>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero section -->
+        <section class="hero" id="home">
+            <div class="container hero-grid">
+
+                <div class="hero-content">
+                    <span class="eyebrow">✨ Meet your new productivity tool</span>
+
+                    <h1>
+                        Do more.<br>
+                        Stress less.<br>
+                        <span>Be unstoppable.</span>
+                    </h1>
+
+                    <p>
+                        Meet NOVA, the all-in-one productivity platform
+                        that helps you organize tasks, manage projects,
+                        and turn your biggest goals into reality.
+                    </p>
+
+                    <div class="hero-actions">
+                        <a href="#get-started" class="btn btn-primary">
+                            Get Started Free →
+                        </a>
+
+                        <a href="#features" class="btn btn-outline">
+                            Explore Features
+                        </a>
+                    </div>
+
+                    <div class="hero-note">
+                        ✓ Easy to use &nbsp; ✓ Simple setup &nbsp; ✓ Made for you
+                    </div>
+                </div>
+
+                <!-- CSS-only product preview -->
+                <div class="preview-wrap">
+                    <div class="product-card">
+                        <div class="preview-header">
+                            <h3>My Dashboard</h3>
+                            <span class="status">● On Track</span>
+                        </div>
+
+                        <div class="progress-label">
+                            <span>Weekly Progress</span>
+                            <span>75%</span>
+                        </div>
+
+                        <div class="progress-track">
+                            <div class="progress-fill"></div>
+                        </div>
+
+                        <div style="margin-top: 22px;">
+                            <h3 style="font-size: 1rem; margin-bottom: 5px;">
+                                Today's Priorities
+                            </h3>
+
+                            <div class="task">
+                                <div class="check">✓</div>
+                                <div>
+                                    <strong>Plan your week</strong>
+                                    <small>Completed successfully</small>
+                                </div>
+                            </div>
+
+                            <div class="task">
+                                <div class="check">✓</div>
+                                <div>
+                                    <strong>Review project tasks</strong>
+                                    <small>Completed successfully</small>
+                                </div>
+                            </div>
+
+                            <div class="task">
+                                <div class="check">→</div>
+                                <div>
+                                    <strong>Focus on your goals</strong>
+                                    <small>In progress</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="floating-note">
+                        ✨ Great progress!
+                        <span>Keep up the momentum.</span>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Features section -->
+        <section class="features" id="features">
+            <div class="container">
+
+                <div class="section-heading">
+                    <h2>Everything you need to succeed</h2>
+                    <p>
+                        Spend less time managing your work and more time
+                        doing what matters. NOVA brings everything together.
+                    </p>
+                </div>
+
+                <div class="feature-grid">
+
+                    <article class="feature-card">
+                        <div class="feature-icon" aria-hidden="true">🎯</div>
+                        <h3>Smart Goal Setting</h3>
+                        <p>
+                            Set clear goals, break them into manageable
+                            steps, and track your progress in one place.
+                        </p>
+                    </article>
+
+                    <article class="feature-card">
+                        <div class="feature-icon" aria-hidden="true">⚡</div>
+                        <h3>Boost Productivity</h3>
+                        <p>
+                            Organize your daily priorities and build better
+                            routines to make every work session count.
+                        </p>
+                    </article>
+
+                    <article class="feature-card">
+                        <div class="feature-icon" aria-hidden="true">📊</div>
+                        <h3>Track Progress</h3>
+                        <p>
+                            See what you've accomplished and understand
+                            where to focus your energy next.
+                        </p>
+                    </article>
+
+                    <article class="feature-card">
+                        <div class="feature-icon" aria-hidden="true">🗂️</div>
+                        <h3>Stay Organized</h3>
+                        <p>
+                            Keep your tasks, projects, and plans together
+                            instead of switching between multiple tools.
+                        </p>
+                    </article>
+
+                    <article class="feature-card">
+                        <div class="feature-icon" aria-hidden="true">🤝</div>
+                        <h3>Work Together</h3>
+                        <p>
+                            Bring your team onto the same page and make
+                            collaboration easier and more transparent.
+                        </p>
+                    </article>
+
+                    <article class="feature-card">
+                        <div class="feature-icon" aria-hidden="true">🔒</div>
+                        <h3>Simple Experience</h3>
+                        <p>
+                            Enjoy a clean, intuitive interface designed
+                            to make planning feel simple and approachable.
+                        </p>
+                    </article>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Final call to action -->
+        <section class="cta-section" id="get-started">
+            <div class="container">
+                <div class="cta-box" id="about">
+                    <h2>Ready to make your next move?</h2>
+
+                    <p>
+                        Take control of your day, focus on your goals,
+                        and discover a simpler way to get things done.
+                    </p>
+
+                    <a href="mailto:hello@example.com?subject=Get%20Started%20with%20NOVA"
+                       class="btn">
+                        Get Started Today →
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container footer-content">
+            <a href="#home" class="logo">NOVA.</a>
+
+            <p>© 2026 NOVA. All rights reserved.</p>
+
+            <div class="footer-links">
+                <a href="#features">Features</a>
+                <a href="#about">About</a>
+                <a href="mailto:hello@example.com">Contact</a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
